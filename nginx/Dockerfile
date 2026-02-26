@@ -1,16 +1,7 @@
-FROM gcc:latest
+FROM nginx:latest
 
-# Set the working directory
-WORKDIR /app
+# Remove default config and add yours
+RUN rm /etc/nginx/conf.d/default.conf
+COPY default.conf /etc/nginx/conf.d/default.conf
 
-# Copy your source code
-COPY app.cpp .
-
-# Compile the app
-RUN g++ app.cpp -o app
-
-# Best practice: document the port
-EXPOSE 8080
-
-# Run the app
-CMD ["./app"]
+EXPOSE 80
