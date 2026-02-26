@@ -1,13 +1,21 @@
-#include <iostream>
+
 #include <cstring>
 #include <unistd.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
 
+#include <iostream>
+
 int main() {
-    char hostname[256];
-    gethostname(hostname, sizeof(hostname));
-    hostname[255] = '\0';
+    // This header tells the browser to display the text instead of downloading a file
+    std::cout << "HTTP/1.1 200 OK\r\n";
+    std::cout << "Content-Type: text/html\r\n";
+    std::cout << "Connection: close\r\n\r\n";
+    
+    // This will show the Container ID so you can see the load balancing happen
+    std::cout << "<html><body><h1>Served by Backend ID: " << std::getenv("HOSTNAME") << "</h1></body></html>" << std::endl;
+    return 0;
+}
     
     // Create socket
     int server_fd = socket(AF_INET, SOCK_STREAM, 0);
